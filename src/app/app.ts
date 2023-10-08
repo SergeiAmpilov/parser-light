@@ -1,6 +1,9 @@
+import 'reflect-metadata';
 import express, { Express, NextFunction, Request, Response } from 'express';
+import { injectable } from 'inversify';
 
 
+@injectable()
 export class App {
 
   app: Express;

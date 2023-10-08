@@ -1,4 +1,6 @@
-# Parser (light) - v 0.0.0
+# Parser (light) - v 0.0.1
+
+![Parser-light](/public/images/parsing.png)
 
 Parser light - это простое веб-приложение для автоматизации сбора данных в интернете. Планируютс к реализации следующие функции - 
 
