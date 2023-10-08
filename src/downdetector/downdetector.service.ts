@@ -1,8 +1,8 @@
 import { inject, injectable } from "inversify";
 import { ILogger } from "../logger/logger.interface";
 import { TYPES } from "../container/types";
-import { DownDetectorTaskOptions } from "./downdetector.taskoptions.type";
 import axios from 'axios';
+import { TaskDownDetectorDto } from "./dto/task.downdetector.dto";
 
 
 @injectable()
@@ -12,7 +12,7 @@ export class DownDetectorService {
     @inject(TYPES.ILogger) private readonly loggerService: ILogger,
   ) {}
 
-  async run({ url }: DownDetectorTaskOptions) {
+  async run({ url, feedback }: TaskDownDetectorDto) {
     try {
       const { status, statusText } = await axios.get(url);
       this.loggerService.log(`(DownDetectorService)`, status, statusText );

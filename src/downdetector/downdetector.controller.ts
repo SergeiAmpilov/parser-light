@@ -40,7 +40,7 @@ export class DownDetectorController extends BaseController {
   }
 
   run({ body }: Request<{}, {}, TaskDownDetectorDto>, res: Response, next: NextFunction) {
-    this.downDetectorService.run({ url: body.url })
+    this.downDetectorService.run(body);
     return this.ok(res, 'test was started');
   }
 }
