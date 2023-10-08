@@ -3,4 +3,5 @@ export const TYPES = {
   ILogger: Symbol.for('ILogger'),
   HwController: Symbol.for('HwController'),
   DownDetectorController: Symbol.for('DownDetectorController'),
+  DownDetectorService: Symbol.for('DownDetectorService'),
 };
