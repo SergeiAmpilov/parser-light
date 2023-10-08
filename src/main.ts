@@ -1,11 +1,13 @@
-import express from "express";
 import { App } from "./app/app";
 import { Container, ContainerModule, interfaces } from "inversify";
 import { TYPES } from "./container/types";
+import { LoggerService } from "./logger/logger.service";
+import { ILogger } from "./logger/logger.interface";
 
 
 export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
   bind<App>(TYPES.Application).to(App);
+  bind<ILogger>(TYPES.ILogger).to(LoggerService).inSingletonScope();
 });
 
 
