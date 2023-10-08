@@ -1,14 +1,21 @@
 import { Router, Response } from "express";
 import { IBaseController } from "./base.controller.interface";
 import 'reflect-metadata';
-import { injectable } from "inversify";
+import { inject, injectable } from "inversify";
+import { IRouteController } from "../interfaces/route.interface";
+import { MiddlewareFunction } from "../interfaces/middleware.function";
+import { ILogger } from "../logger/logger.interface";
+import { TYPES } from "../container/types";
+import { LoggerService } from "../logger/logger.service";
 
 @injectable()
 export abstract class BaseController implements IBaseController {
 
   private readonly _router: Router;
 
-  constructor() {
+  constructor(
+    @inject(TYPES.ILogger) protected readonly loggerService: LoggerService,
+  ) {
     this._router = Router();
   }
 
@@ -28,7 +35,19 @@ export abstract class BaseController implements IBaseController {
     return res.sendStatus(201);
   }
 
-  protected bindRoutes() {}
+  protected bindRoutes(routes: IRouteController[]) {
+
+    for (const route of routes) {
+
+      this.loggerService.log(`[${route.method}] ${route.path}`);
+
+      const middlewaresPipeline: MiddlewareFunction[] = route.middleware ? route.middleware.map( f => f.execute.bind(f) ) : [];
+
+      this._router[route.method]( route.path, [...middlewaresPipeline, route.func.bind(this) ] );
+      
+    }
+   
+  }
 
   
 } 

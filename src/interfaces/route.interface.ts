@@ -1,10 +1,10 @@
-import { Request, Response, NextFunction } from "express";
+import { Router } from "express";
 import { MiddlewareFunction } from "./middleware.function";
 import { IMiddleware } from "./middleware.interface";
 
-export interface IRoute {
+export interface IRouteController {
   path: string;
-  method: 'get' | 'post' | 'delete' | 'patch';
+  method: keyof Pick<Router, 'get' | 'post' | 'delete' | 'patch' | 'put'>;
   func: MiddlewareFunction;
   middleware?: IMiddleware[];
 }
