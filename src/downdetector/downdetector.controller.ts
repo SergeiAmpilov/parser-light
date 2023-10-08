@@ -24,7 +24,7 @@ export class DownDetectorController extends BaseController {
         func: this.dd
       },
       {
-        path: '/downdetector/task',
+        path: '/downdetector/run',
         method: "post",
         func: this.run
       },
