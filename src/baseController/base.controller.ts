@@ -14,7 +14,8 @@ export abstract class BaseController implements IBaseController {
   private readonly _router: Router;
 
   constructor(
-    @inject(TYPES.ILogger) protected readonly loggerService: LoggerService,
+    private readonly logger: LoggerService,
+
   ) {
     this._router = Router();
   }
@@ -39,7 +40,7 @@ export abstract class BaseController implements IBaseController {
 
     for (const route of routes) {
 
-      this.loggerService.log(`[${route.method}] ${route.path}`);
+      this.logger.log(`[${route.method}] ${route.path}`);
 
       const middlewaresPipeline: MiddlewareFunction[] = route.middleware ? route.middleware.map( f => f.execute.bind(f) ) : [];
 
