@@ -43,7 +43,7 @@ export class App {
 
     this.app.listen(
       this.port,
-      () => this.loggerService.log('App', `Server has been started http://localhost:${this.port}}`)
+      () => this.loggerService.log('App', `Server has been started http://localhost:${this.port}`)
     )
   }
 

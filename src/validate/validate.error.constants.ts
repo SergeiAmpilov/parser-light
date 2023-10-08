@@ -1,0 +1,1 @@
+export const VALIDATE_ERROR_STATUS_CODE = 422;

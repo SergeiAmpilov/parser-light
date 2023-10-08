@@ -5,6 +5,7 @@ import { ILogger } from "../logger/logger.interface";
 import { Request, Response, NextFunction } from "express";
 import { DownDetectorService } from "./downdetector.service";
 import { TaskDownDetectorDto } from "./dto/task.downdetector.dto";
+import { ValidateMiddleware } from "../validate/validate.middleware";
 
 
 @injectable()
@@ -26,7 +27,10 @@ export class DownDetectorController extends BaseController {
       {
         path: '/downdetector/run',
         method: "post",
-        func: this.run
+        func: this.run,
+        middleware: [
+          new ValidateMiddleware(TaskDownDetectorDto)
+        ]
       },
     ]);
   }
