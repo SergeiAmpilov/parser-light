@@ -4,6 +4,8 @@
   "description": "Parser light - это простое веб-приложение для автоматизации сбора данных в интернете. Планируютс к реализации следующие функции -",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
+    "start": "node ./dist/main",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
