@@ -4,12 +4,14 @@ import { TYPES } from "./container/types";
 import { LoggerService } from "./logger/logger.service";
 import { ILogger } from "./logger/logger.interface";
 import { HwController } from "./hello-world/hello.world.controller";
+import { DownDetectorController } from "./downdetector/downdetector.controller";
 
 
 export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
   bind<App>(TYPES.Application).to(App);
   bind<ILogger>(TYPES.ILogger).to(LoggerService).inSingletonScope();
   bind<HwController>(TYPES.HwController).to(HwController);
+  bind<DownDetectorController>(TYPES.DownDetectorController).to(DownDetectorController);
 });
 
 

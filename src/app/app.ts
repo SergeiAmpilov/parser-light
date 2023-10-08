@@ -4,6 +4,7 @@ import { inject, injectable } from 'inversify';
 import { ILogger } from '../logger/logger.interface';
 import { TYPES } from '../container/types';
 import { HwController } from '../hello-world/hello.world.controller';
+import { DownDetectorController } from '../downdetector/downdetector.controller';
 
 
 @injectable()
@@ -15,6 +16,7 @@ export class App {
   constructor(
     @inject(TYPES.ILogger) private readonly loggerService: ILogger,
     @inject(TYPES.HwController) private readonly hwController: HwController,
+    @inject(TYPES.DownDetectorController) private readonly downDetectorController: DownDetectorController,
   ) {
     this.app = express();
     this.port = process.env?.PORT ? Number(process.env.PORT) : 3000;
@@ -22,6 +24,7 @@ export class App {
 
   useRoutes() {
     this.app.use(this.hwController.router);
+    this.app.use(this.downDetectorController.router);
   }
 
   public init() {
