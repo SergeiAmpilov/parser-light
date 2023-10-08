@@ -6,6 +6,7 @@ import { ILogger } from '../logger/logger.interface';
 import { TYPES } from '../container/types';
 import { HwController } from '../hello-world/hello.world.controller';
 import { DownDetectorController } from '../downdetector/downdetector.controller';
+import { PrismaService } from '../prisma/prisma.service';
 
 
 @injectable()
@@ -18,9 +19,14 @@ export class App {
     @inject(TYPES.ILogger) private readonly loggerService: ILogger,
     @inject(TYPES.HwController) private readonly hwController: HwController,
     @inject(TYPES.DownDetectorController) private readonly downDetectorController: DownDetectorController,
+    @inject(TYPES.PrismaService) private readonly prismaService: PrismaService,
   ) {
     this.app = express();
     this.port = process.env?.PORT ? Number(process.env.PORT) : 3000;
+  }
+
+  async usePrisma() {
+    await this.prismaService.connect();
   }
 
   useBodyParse() {
@@ -36,14 +42,15 @@ export class App {
     this.app.use(this.downDetectorController.router);
   }
 
-  public init() {
+  public async init() {
 
     this.useBodyParse();
     this.useRoutes();
+    await this.usePrisma();
 
     this.app.listen(
       this.port,
-      () => this.loggerService.log('App', `Server has been started http://localhost:${this.port}`)
+      () => this.loggerService.log('{App}', `Server has been started http://localhost:${this.port}`)
     )
   }
 

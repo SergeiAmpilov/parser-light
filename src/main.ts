@@ -6,6 +6,7 @@ import { ILogger } from "./logger/logger.interface";
 import { HwController } from "./hello-world/hello.world.controller";
 import { DownDetectorController } from "./downdetector/downdetector.controller";
 import { DownDetectorService } from "./downdetector/downdetector.service";
+import { PrismaService } from "./prisma/prisma.service";
 
 
 export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
@@ -14,6 +15,8 @@ export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
   bind<HwController>(TYPES.HwController).to(HwController);
   bind<DownDetectorController>(TYPES.DownDetectorController).to(DownDetectorController);
   bind<DownDetectorService>(TYPES.DownDetectorService).to(DownDetectorService);
+  bind<PrismaService>(TYPES.PrismaService).to(PrismaService);
+  
 });
 
 
