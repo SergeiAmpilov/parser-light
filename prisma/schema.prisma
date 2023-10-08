@@ -10,10 +10,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model DownDetectorTask {
+model DownDetectorTaskModel {
   id  Int @id @default(autoincrement())
   url String
   issuccess Boolean @default(false)
   status  Int
   statusText  String
+  createdAt DateTime  @default(now())
 }
