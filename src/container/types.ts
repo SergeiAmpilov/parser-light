@@ -6,4 +6,5 @@ export const TYPES = {
   DownDetectorService: Symbol.for('DownDetectorService'),
   PrismaService: Symbol.for('PrismaService'),
   IndexPageController: Symbol.for('IndexPageController'),
+  SeoParserController: Symbol.for('SeoParserController'),
 };

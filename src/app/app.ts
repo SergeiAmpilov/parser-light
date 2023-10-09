@@ -11,6 +11,7 @@ import cors from 'cors';
 import path from 'path';
 import { engine } from 'express-handlebars';
 import { IndexPageController } from '../index-page/index.page.controller';
+import { SeoParserController } from '../seoparser/seoparser.controller';
 
 
 
@@ -25,6 +26,7 @@ export class App {
     @inject(TYPES.HwController) private readonly hwController: HwController,
     @inject(TYPES.IndexPageController) private readonly indexPageController: IndexPageController,
     @inject(TYPES.DownDetectorController) private readonly downDetectorController: DownDetectorController,
+    @inject(TYPES.SeoParserController) private readonly seoParserController: SeoParserController,
     @inject(TYPES.PrismaService) private readonly prismaService: PrismaService,
   ) {
     this.app = express();
@@ -71,6 +73,7 @@ export class App {
     this.app.use(this.indexPageController.router);
     this.app.use(this.hwController.router);
     this.app.use(this.downDetectorController.router);
+    this.app.use(this.seoParserController.router);
   }
 
   public async init() {
