@@ -7,6 +7,7 @@ import { TYPES } from '../container/types';
 import { HwController } from '../hello-world/hello.world.controller';
 import { DownDetectorController } from '../downdetector/downdetector.controller';
 import { PrismaService } from '../prisma/prisma.service';
+import cors from 'cors';
 
 
 @injectable()
@@ -37,6 +38,10 @@ export class App {
     this.app.use(bodyParser.json())
   }
 
+  useCors() {
+    this.app.use(cors())
+  }
+
   useRoutes() {
     this.app.use(this.hwController.router);
     this.app.use(this.downDetectorController.router);
@@ -44,6 +49,7 @@ export class App {
 
   public async init() {
 
+    this.useCors();
     this.useBodyParse();
     this.useRoutes();
     await this.usePrisma();
