@@ -25,6 +25,11 @@ export class DownDetectorController extends BaseController {
         func: this.dd
       },
       {
+        path: '/downdetector/render',
+        method: "get",
+        func: this.renderdd
+      },
+      {
         path: '/downdetector/run',
         method: "post",
         func: this.run,
@@ -42,5 +47,9 @@ export class DownDetectorController extends BaseController {
   run({ body }: Request<{}, {}, TaskDownDetectorDto>, res: Response, next: NextFunction) {
     this.downDetectorService.run(body);
     return this.ok(res, 'test was started');
+  }
+
+  renderdd(req: Request, res: Response, next: NextFunction) {
+    res.status(200).render('downdetector', {});
   }
 }

@@ -8,6 +8,9 @@ import { HwController } from '../hello-world/hello.world.controller';
 import { DownDetectorController } from '../downdetector/downdetector.controller';
 import { PrismaService } from '../prisma/prisma.service';
 import cors from 'cors';
+import path from 'path';
+import { engine } from 'express-handlebars';
+
 
 
 @injectable()
@@ -42,6 +45,26 @@ export class App {
     this.app.use(cors())
   }
 
+  useStatic() {
+    this.app.use(
+      express.static(
+        path.join(
+          path.dirname(path.dirname(__dirname)), 
+          'public'
+        )
+      )
+    );
+  }
+
+  useRender() {
+    this.app.engine('hbs', engine({
+      defaultLayout: 'main',
+      extname: 'hbs'
+    }));
+    this.app.set('view engine', 'hbs');
+    this.app.set('views', './views');
+  }
+
   useRoutes() {
     this.app.use(this.hwController.router);
     this.app.use(this.downDetectorController.router);
@@ -52,6 +75,8 @@ export class App {
     this.useCors();
     this.useBodyParse();
     this.useRoutes();
+    this.useStatic();
+    this.useRender();
     await this.usePrisma();
 
     this.app.listen(
