@@ -18,3 +18,13 @@ model DownDetectorTaskModel {
   statusText  String
   createdAt DateTime  @default(now())
 }
+
+// seoparser
+
+model SeoTaskModel {
+  id  Int @id @default(autoincrement())
+  url String
+  createdAt DateTime  @default(now())
+  sitemap Int @default(0)
+  page Int @default(0)
+}

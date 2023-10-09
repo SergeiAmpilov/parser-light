@@ -6,6 +6,7 @@ import { Request, Response, NextFunction } from "express";
 import { ValidateMiddleware } from "../validate/validate.middleware";
 import { SeoParserDto } from "./dto/seoparser.task.dto";
 import { SeoParserService } from "./seoparser.service";
+import { SeoTaskModel } from "@prisma/client";
 
 
 
@@ -41,10 +42,25 @@ export class SeoParserController extends BaseController {
     return res.render('seoparser');
   }
 
-  async run({ url }: Request<{}, {}, SeoParserDto>, res: Response, next: NextFunction) {
+  async run({ body }: Request<{}, {}, SeoParserDto>, res: Response, next: NextFunction) {
+
+
+    /*
     
-    this.seoParserService.run(url);
-    return 'seoparser task has been started';
+     мне нужны три таблички
+      1 - сеопарсер таск - содержит список запущенных тасков - ид, дата старта, сайтмэпов спаршено, страниц спаршено
+      2 - сеопарсер сайтмэп - список сайтмэпов в привязке к владельцу - таску - по ид
+      3 - сеопарсер пейдж - собственно страница. точто так же в привязке к ид таска и ид сайтмэпа
+             - содержит сначала тупо список страниц а потом страница обогащается данными о тегах тайтл х1 дескрипшен
+    */
     
+    const { id }: SeoTaskModel = await this.seoParserService.run(body);
+
+    // после создания таска, запускаем в привязке к нему парсинг сайтмэпов
+
+    
+
+    return res.send(`seoparser task has been started - ${ id }`);
+
   }
 }
