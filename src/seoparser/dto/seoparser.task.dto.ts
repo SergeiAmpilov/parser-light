@@ -1,13 +1,10 @@
-
 import { IsString, IsUrl } from 'class-validator';
 
-export class TaskDownDetectorDto {
 
+export class SeoParserDto {
+  
   @IsString()
   @IsUrl()
   url: string;
-
-  @IsString()
-  feedback: string;
-
+  
 }

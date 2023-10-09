@@ -9,6 +9,7 @@ import { DownDetectorService } from "./downdetector/downdetector.service";
 import { PrismaService } from "./prisma/prisma.service";
 import { IndexPageController } from "./index-page/index.page.controller";
 import { SeoParserController } from "./seoparser/seoparser.controller";
+import { SeoParserService } from "./seoparser/seoparser.service";
 
 
 export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
@@ -19,7 +20,8 @@ export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
   bind<DownDetectorService>(TYPES.DownDetectorService).to(DownDetectorService);
   bind<PrismaService>(TYPES.PrismaService).to(PrismaService);
   bind<IndexPageController>(TYPES.IndexPageController).to(IndexPageController);
-  bind<SeoParserController>(TYPES.SeoParserController).to(SeoParserController);  
+  bind<SeoParserController>(TYPES.SeoParserController).to(SeoParserController);
+  bind<SeoParserService>(TYPES.SeoParserService).to(SeoParserService);
 });
 
 
