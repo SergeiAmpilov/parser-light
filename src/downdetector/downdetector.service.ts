@@ -25,7 +25,7 @@ export class DownDetectorService {
       const result = await axios.get(url);
       this.loggerService.log(`[DownDetectorService]`, result?.status, result?.statusText);
 
-      if (feedback) {
+      if (feedback == '') {
         await this.makeFeedback();
       } else {
         await this.storeToDb({
@@ -58,6 +58,15 @@ export class DownDetectorService {
       data: {
         ...result,
       }
+    });
+  }
+
+  async getList() {
+    return this.prismaService.client.downDetectorTaskModel.findMany({
+      orderBy: [
+        { id: 'desc' },
+        { createdAt: 'desc' }
+      ]
     });
   }
 

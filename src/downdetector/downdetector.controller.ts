@@ -49,7 +49,9 @@ export class DownDetectorController extends BaseController {
     return this.ok(res, 'test was started');
   }
 
-  renderdd(req: Request, res: Response, next: NextFunction) {
-    res.status(200).render('downdetector', {});
+  async renderdd(req: Request, res: Response, next: NextFunction) {
+
+    const list = await this.downDetectorService.getList();
+    res.status(200).render('downdetector', { list });
   }
 }

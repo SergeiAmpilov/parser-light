@@ -1,5 +1,5 @@
 
-import { IsString, IsUrl, IsBoolean } from 'class-validator';
+import { IsString, IsUrl, IsBoolean, IsBooleanString } from 'class-validator';
 
 export class TaskDownDetectorDto {
 
@@ -7,7 +7,7 @@ export class TaskDownDetectorDto {
   @IsUrl()
   url: string;
 
-  @IsBoolean()
-  feedback: boolean;
+  @IsString()
+  feedback: string;
 
 }

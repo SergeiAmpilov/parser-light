@@ -1,1 +1,18 @@
 <h1>DownDetector</h1>
+
+<form action="/downdetector/run" method="post">
+  url: <input type="text" name="url">
+  <br>
+  feedback <input type="text" name="feedback" value="no">
+  <br> <br>
+  <button>Submit</button>
+</form>
+
+
+{{#if list.length}}
+<hr>
+<h2>list of tasks</h2>
+  {{#each list}}
+    {{> ddcard }}
+  {{/each}}
+{{/if}}
