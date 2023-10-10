@@ -33,6 +33,11 @@ export class SeoParserController extends BaseController {
         middleware: [
           new ValidateMiddleware(SeoParserDto)
         ]
+      },
+      {
+        path: '/seoparser/sitemaps/:id',
+        method: 'get',
+        func: this.renderSitemap
       }
     ]);
   }
@@ -41,6 +46,13 @@ export class SeoParserController extends BaseController {
   async render(req: Request, res: Response, next: NextFunction) {
     const list = await this.seoParserService.getSeoTaskList();
     return res.render('seoparser', { list });
+  }
+
+  async renderSitemap(req: Request, res: Response, next: NextFunction) {
+    return res.render('sitemap', {
+      id: req.params.id,
+      list: [],
+    });
   }
 
   async run({ body }: Request<{}, {}, SeoParserDto>, res: Response, next: NextFunction) {
