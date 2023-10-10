@@ -6,6 +6,7 @@ import { SeoTaskModel } from "@prisma/client";
 import axios from "axios";
 import { parseString } from "xml2js";
 import { ILogger } from "../logger/logger.interface";
+import { ISiteMap } from "./interfaces/sitemap.interface";
 
 
 @injectable()
@@ -29,11 +30,33 @@ export class SeoParserService {
 
     const { data } = await axios.get(baseUrl);
 
-    parseString(data, (err, result) => {
+    parseString(data, async (err, result) => {
       if (err) {
         this.loggerService.error('[SeoParserService]', err)
       } else {
-        this.loggerService.log('[SeoParserService]', result)
+        // this.loggerService.log('[SeoParserService]', result);
+
+        const sitemapList: ISiteMap[] = result?.sitemapindex?.sitemap.map(
+          (cSitemap: { loc: any[]; lastmod: any[]; }) => {
+            return {
+              loc: cSitemap.loc[0],
+              lastmod: cSitemap.lastmod[0],
+            }
+          }
+        );
+
+
+        for (const cSitemap of sitemapList) {
+          await this.prismaService.client.sitemapModel.create({
+            data: {
+              taskid,
+              url: cSitemap.loc,
+              lastmod: cSitemap.lastmod ?? '',
+            }
+          });
+        }
+
+        
       }
     });
 
