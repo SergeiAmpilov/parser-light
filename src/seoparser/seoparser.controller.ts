@@ -57,6 +57,7 @@ export class SeoParserController extends BaseController {
     const { id }: SeoTaskModel = await this.seoParserService.run(body);
 
     // после создания таска, запускаем в привязке к нему парсинг сайтмэпов
+    this.seoParserService.getSitemaps(body.url, id);
 
     
 
