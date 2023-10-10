@@ -38,27 +38,16 @@ export class SeoParserController extends BaseController {
   }
 
 
-  render(req: Request, res: Response, next: NextFunction) {
-    return res.render('seoparser');
+  async render(req: Request, res: Response, next: NextFunction) {
+    const list = await this.seoParserService.getSeoTaskList();
+    return res.render('seoparser', { list });
   }
 
   async run({ body }: Request<{}, {}, SeoParserDto>, res: Response, next: NextFunction) {
-
-
-    /*
-    
-     мне нужны три таблички
-      1 - сеопарсер таск - содержит список запущенных тасков - ид, дата старта, сайтмэпов спаршено, страниц спаршено
-      2 - сеопарсер сайтмэп - список сайтмэпов в привязке к владельцу - таску - по ид
-      3 - сеопарсер пейдж - собственно страница. точто так же в привязке к ид таска и ид сайтмэпа
-             - содержит сначала тупо список страниц а потом страница обогащается данными о тегах тайтл х1 дескрипшен
-    */
     
     const { id }: SeoTaskModel = await this.seoParserService.run(body);
 
-    // после создания таска, запускаем в привязке к нему парсинг сайтмэпов
-    this.seoParserService.getSitemaps(body.url, id);
-
+    this.seoParserService.parseSitemaps(body.url, id);
     
 
     return res.send(`seoparser task has been started - ${ id }`);

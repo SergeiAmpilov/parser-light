@@ -1,1 +1,23 @@
-<h1>This is seoparser</h1>
+<h1>Seoparser</h1>
+
+
+
+{{#if list.length}}
+<h2>list of tasks</h2>
+  <ul>
+    {{#each list}}
+      <li>
+        id: {{ id }}
+        <br>
+        url: {{ url }}
+        <br>
+        createdAt: {{ createdAt }}
+        <br>
+        <a href="//seoparser/sitemaps/{{ id }}">go to sitemap list</a>
+      </li>
+
+      <hr>
+    
+    {{/each}}
+  </ul>
+{{/if}}

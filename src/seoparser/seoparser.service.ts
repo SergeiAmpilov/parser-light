@@ -24,7 +24,7 @@ export class SeoParserService {
     });
   }
 
-  public async getSitemaps( url: string, taskid: number ): Promise<void> {
+  public async parseSitemaps( url: string, taskid: number ): Promise<void> {
 
     const baseUrl = `${url}sitemap.xml`;
 
@@ -34,7 +34,6 @@ export class SeoParserService {
       if (err) {
         this.loggerService.error('[SeoParserService]', err)
       } else {
-        // this.loggerService.log('[SeoParserService]', result);
 
         const sitemapList: ISiteMap[] = result?.sitemapindex?.sitemap.map(
           (cSitemap: { loc: any[]; lastmod: any[]; }) => {
@@ -45,7 +44,6 @@ export class SeoParserService {
           }
         );
 
-
         for (const cSitemap of sitemapList) {
           await this.prismaService.client.sitemapModel.create({
             data: {
@@ -55,11 +53,19 @@ export class SeoParserService {
             }
           });
         }
-
         
       }
     });
 
 
+  }
+
+  public async getSeoTaskList(): Promise<SeoTaskModel[]> {
+    return this.prismaService.client.seoTaskModel.findMany({
+      orderBy: [
+        { id: 'desc' },
+        { createdAt: 'desc' }
+      ]
+    });
   }
 }
