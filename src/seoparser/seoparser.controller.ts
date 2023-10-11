@@ -82,14 +82,15 @@ export class SeoParserController extends BaseController {
   }
 
   async parsepages({ body }: Request<{}, {}, ParsePagesDto>, res: Response, next: NextFunction) {
-    return this.seoParserService.parsePages(body.url, body.taskid);
+    await this.seoParserService.parsePages(body.url, body.taskid);
+    return res.status(200).send('started parsing pages');
   }
 
   async renderpages(req: Request, res: Response, next: NextFunction) {
 
     const { sitemap, taskid } = req.query;
     const list = await this.seoParserService.getPagesBySitemap(String(sitemap), Number(taskid));
-    
+
     return res.render('pages', {
       sitemap,
       taskid,
