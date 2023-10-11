@@ -7,6 +7,14 @@ import axios from "axios";
 import { parseString } from "xml2js";
 import { ILogger } from "../logger/logger.interface";
 import { ISiteMap } from "./interfaces/sitemap.interface";
+import puppeteer from 'puppeteer-extra';
+import StealthPlugin from 'puppeteer-extra-plugin-stealth';
+import { Browser, Page } from "puppeteer";
+import { ITag } from "./interfaces/tags.interface";
+
+
+puppeteer.use(StealthPlugin());
+
 
 
 @injectable()
@@ -112,5 +120,52 @@ export class SeoParserService {
         sitemap,
       }
     });
+  }
+
+  public async parseTagsByPage(id: number): Promise<void> {
+
+    const pageFound: PageModel | null = await this.prismaService.client.pageModel.findFirst({
+      where: { id }
+    });
+
+    if (!pageFound) {
+      return ;
+    }
+
+    try {
+      const browser: Browser = await puppeteer.launch({
+        headless: false,
+        defaultViewport: null,
+      });
+  
+  
+      const page: Page = await browser.newPage();
+      await page.goto(pageFound.url, { waitUntil: "domcontentloaded" });
+  
+  
+      const res: ITag = await page.evaluate(() => {
+        return {
+          title: document.querySelector('title')?.innerText,
+          description: document.querySelector('meta[name=description]')?.getAttribute('content')?.toString(),
+          h1: document.querySelector('h1')?.innerText.toString(),
+        }
+      });
+  
+  
+      await browser.close();
+  
+  
+      // store to db
+  
+  
+      await this.prismaService.client.pageModel.update({
+        where: { id },
+        data: {
+          title: res.title ?? '',
+          h1: res.h1 ?? '',
+          description: res.description ?? ''
+        }
+      })
+    } catch (e) {}
   }
 }

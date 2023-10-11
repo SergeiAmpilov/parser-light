@@ -52,6 +52,11 @@ export class SeoParserController extends BaseController {
         path: '/seoparser/sitemaps/:id',
         method: 'get',
         func: this.renderSitemap
+      },
+      {
+        path: '/seoparser/parsetags/:id',
+        method: 'get',
+        func: this.parseTags
       }
     ]);
   }
@@ -97,5 +102,12 @@ export class SeoParserController extends BaseController {
       list
     });
 
+  }
+
+  async parseTags(req: Request, res: Response, next: NextFunction) {
+    const { id } = req.params;
+    this.seoParserService.parseTagsByPage(Number(id));
+    
+    return res.send('tags update started')
   }
 }
