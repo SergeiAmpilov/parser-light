@@ -2,7 +2,7 @@ import { inject, injectable } from "inversify";
 import { TYPES } from "../container/types";
 import { PrismaService } from "../prisma/prisma.service";
 import { SeoParserDto } from "./dto/seoparser.task.dto";
-import { SeoTaskModel, SitemapModel } from "@prisma/client";
+import { PageModel, SeoTaskModel, SitemapModel } from "@prisma/client";
 import axios from "axios";
 import { parseString } from "xml2js";
 import { ILogger } from "../logger/logger.interface";
@@ -45,6 +45,7 @@ export class SeoParserService {
         );
 
         for (const cSitemap of sitemapList) {
+
           await this.prismaService.client.sitemapModel.create({
             data: {
               taskid,
@@ -52,6 +53,7 @@ export class SeoParserService {
               lastmod: cSitemap.lastmod ?? '',
             }
           });
+
         }
         
       }
@@ -72,6 +74,43 @@ export class SeoParserService {
   public async getSitemapListByTaskId(taskid: number): Promise<SitemapModel[]> {
     return this.prismaService.client.sitemapModel.findMany({
       where: { taskid }
+    });
+  }
+
+  public async parsePages(url: string, id: number) {
+    
+    const { data } = await axios.get(url);
+
+    parseString(data, async (err, result) => {
+      if (err) {
+        this.loggerService.error('[SeoParserService]', err)
+      } else {
+        if (result.hasOwnProperty('urlset')) {
+          if (result.urlset.hasOwnProperty('url') && typeof result.urlset.url == 'object') {
+            for (const { loc } of result.urlset.url) {
+              
+              await this.prismaService.client.pageModel.create({
+                data: {
+                  url: loc[0],
+                  sitemap: url,
+                  taskid: id
+                }
+              });              
+            }
+          }
+        }
+      }
+    })
+
+
+  }
+
+  public async getPagesBySitemap(sitemap: string, taskid: number): Promise<PageModel[]> {
+    return this.prismaService.client.pageModel.findMany({
+      where: {
+        taskid,
+        sitemap,
+      }
     });
   }
 }

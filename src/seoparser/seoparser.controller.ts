@@ -7,6 +7,7 @@ import { ValidateMiddleware } from "../validate/validate.middleware";
 import { SeoParserDto } from "./dto/seoparser.task.dto";
 import { SeoParserService } from "./seoparser.service";
 import { SeoTaskModel } from "@prisma/client";
+import { ParsePagesDto } from "./dto/parse-pages.dto";
 
 
 
@@ -35,6 +36,19 @@ export class SeoParserController extends BaseController {
         ]
       },
       {
+        path: '/seoparser/parsepages',
+        method: 'post',
+        func: this.parsepages,
+        middleware: [
+          new ValidateMiddleware(ParsePagesDto)
+        ]
+      },
+      {
+        path: '/seoparser/renderpages',
+        method: 'get',
+        func: this.renderpages,
+      },
+      {
         path: '/seoparser/sitemaps/:id',
         method: 'get',
         func: this.renderSitemap
@@ -52,7 +66,7 @@ export class SeoParserController extends BaseController {
 
     const list = await this.seoParserService.getSitemapListByTaskId(Number(req.params.id));
     return res.render('sitemap', {
-      id: req.params.id,
+      taskid: req.params.id,
       list,
     });
   }
@@ -62,9 +76,25 @@ export class SeoParserController extends BaseController {
     const { id }: SeoTaskModel = await this.seoParserService.run(body);
 
     this.seoParserService.parseSitemaps(body.url, id);
-    
 
     return res.send(`seoparser task has been started - ${ id }`);
+
+  }
+
+  async parsepages({ body }: Request<{}, {}, ParsePagesDto>, res: Response, next: NextFunction) {
+    return this.seoParserService.parsePages(body.url, body.taskid);
+  }
+
+  async renderpages(req: Request, res: Response, next: NextFunction) {
+
+    const { sitemap, taskid } = req.query;
+
+    const list = await this.seoParserService.getPagesBySitemap(String(sitemap), Number(taskid));
+    return res.render('pages', {
+      sitemap,
+      taskid,
+      list
+    });
 
   }
 }

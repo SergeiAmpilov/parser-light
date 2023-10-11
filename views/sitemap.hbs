@@ -1,4 +1,4 @@
-<h1>Sitemap by task - {{ id }}</h1>
+<h1>Sitemap by task - {{ taskid }}</h1>
 
 {{#if list.length}}
  <ul>
@@ -10,6 +10,7 @@
         <br>
         lastmod: {{ lastmod }}
         <br>
+        <a href="/seoparser/renderpages?sitemap={{url}}&taskid={{taskid}}">view pages</a>
       </li>
 
       <hr>

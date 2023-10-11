@@ -26,6 +26,7 @@ model SeoTaskModel {
   url String
   createdAt DateTime  @default(now())
   sitemaps SitemapModel[]
+  pages PageModel[]
 }
 
 
@@ -34,6 +35,18 @@ model SitemapModel {
   url String
   lastmod String
   createdAt DateTime  @default(now())
+  task SeoTaskModel @relation(fields: [taskid], references: [id])
+  taskid Int
+}
+
+model PageModel {
+  id  Int @id @default(autoincrement())
+  url String
+  createdAt DateTime  @default(now())
+  title String @default("")
+  h1 String @default("")
+  sitemap String
+  description String @default("")
   task SeoTaskModel @relation(fields: [taskid], references: [id])
   taskid Int
 }
