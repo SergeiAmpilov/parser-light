@@ -44,3 +44,6 @@ Profit!
 + TypeScript
 + Node.js
 + Express.js
++ Prisma - ORM
++ axios - для запросов
++ puppeteer - для парсинга
