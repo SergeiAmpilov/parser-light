@@ -1,1 +1,20 @@
 <h1>Sitemap by task - {{ id }}</h1>
+
+{{#if list.length}}
+ <ul>
+    {{#each list}}
+      <li>
+        id: {{ id }}
+        <br>
+        url: {{ url }}
+        <br>
+        lastmod: {{ lastmod }}
+        <br>
+      </li>
+
+      <hr>
+    
+    {{/each}}
+  </ul>
+{{/if}}
+<a href="/seoparser/render">go back to seoparser</a>

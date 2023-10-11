@@ -25,8 +25,6 @@ model SeoTaskModel {
   id  Int @id @default(autoincrement())
   url String
   createdAt DateTime  @default(now())
-  sitemap Int @default(0)
-  page Int @default(0)
   sitemaps SitemapModel[]
 }
 
@@ -37,6 +35,5 @@ model SitemapModel {
   lastmod String
   createdAt DateTime  @default(now())
   task SeoTaskModel @relation(fields: [taskid], references: [id])
-  taskid Int 
-
+  taskid Int
 }

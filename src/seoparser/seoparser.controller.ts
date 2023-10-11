@@ -49,9 +49,11 @@ export class SeoParserController extends BaseController {
   }
 
   async renderSitemap(req: Request, res: Response, next: NextFunction) {
+
+    const list = await this.seoParserService.getSitemapListByTaskId(Number(req.params.id));
     return res.render('sitemap', {
       id: req.params.id,
-      list: [],
+      list,
     });
   }
 

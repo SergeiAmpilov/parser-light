@@ -2,7 +2,7 @@ import { inject, injectable } from "inversify";
 import { TYPES } from "../container/types";
 import { PrismaService } from "../prisma/prisma.service";
 import { SeoParserDto } from "./dto/seoparser.task.dto";
-import { SeoTaskModel } from "@prisma/client";
+import { SeoTaskModel, SitemapModel } from "@prisma/client";
 import axios from "axios";
 import { parseString } from "xml2js";
 import { ILogger } from "../logger/logger.interface";
@@ -66,6 +66,12 @@ export class SeoParserService {
         { id: 'desc' },
         { createdAt: 'desc' }
       ]
+    });
+  }
+
+  public async getSitemapListByTaskId(taskid: number): Promise<SitemapModel[]> {
+    return this.prismaService.client.sitemapModel.findMany({
+      where: { taskid }
     });
   }
 }
