@@ -1,1 +1,20 @@
 <h1>Pages for sitemap - {{ sitemap }} and taskId - {{ taskid }}</h1>
+
+
+{{#if list.length}}
+ <ul>
+    {{#each list}}
+      <li>
+        id: {{ id }}
+        <br>
+        url: {{ url }}
+        <br>
+        {{!-- <a href="/seoparser/renderpages?sitemap={{url}}&taskid={{taskid}}">view pages</a> --}}
+      </li>
+
+      <hr>
+    
+    {{/each}}
+  </ul>
+{{/if}}
+<a href="/seoparser/sitemaps/{{ taskid }}">go back to sitemaps</a>
