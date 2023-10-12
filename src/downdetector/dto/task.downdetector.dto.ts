@@ -7,7 +7,4 @@ export class TaskDownDetectorDto {
   @IsUrl()
   url: string;
 
-  @IsString()
-  feedback: string;
-
 }

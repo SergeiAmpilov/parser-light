@@ -1,19 +1,34 @@
 <h1>DownDetector</h1>
 <p>Сервис мониторинга доступности веб-сайтов</p>
 
-<h2>Запуск нового теста</h2>
-<form action="/downdetector/run" method="post">
-  url: <input type="text" name="url">
-  <br>
-  feedback <input type="text" name="feedback" value="no">
-  <br> <br>
-  <button>Запустить</button>
+
+<form action="/downdetector/run" method="post" class="" name="downdetectorform">
+  <h3>Запуск нового теста</h3>
+  <div class="row">
+    <div class="valign-wrapper">
+
+      <div class="col s1">
+        url:
+      </div>
+      
+      <div class="col s8">
+        <input type="text" name="url" class="form__input blue-text text-lighten-5">
+      </div>
+
+      <div class="col s3">
+        <button class="btn waves-effect waves-light" type="submit" name="action">
+          Запустить
+        </button>
+      </div>
+    </div>
+  </div>
+
+  
 </form>
 
 
 {{#if list.length}}
-<hr>
-<h2>Журнал запущенных тестов</h2>
+<h2>Журнал тестов</h2>
   {{#each list}}
     {{> ddcard }}
   {{/each}}

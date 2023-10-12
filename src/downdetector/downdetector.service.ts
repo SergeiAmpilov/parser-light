@@ -16,42 +16,31 @@ export class DownDetectorService {
     @inject(TYPES.PrismaService) private readonly prismaService: PrismaService,
   ) {}
 
-  async run({ url, feedback }: TaskDownDetectorDto) {
-
-    let result: any;
-
-
+  async run({ url }: TaskDownDetectorDto) {
+    
     try {
+
       const result = await axios.get(url);
-      this.loggerService.log(`[DownDetectorService]`, result?.status, result?.statusText);
 
-      if (feedback == '') {
-        await this.makeFeedback();
-      } else {
-        await this.storeToDb({
-          url, 
-          issuccess: true,
-          status: result.status,
-          statusText: result.statusText,
-        });
-      }
+      await this.storeToDb({
+        url, 
+        issuccess: true,
+        status: result.status,
+        statusText: result.statusText,
+      });
+
     } catch (e) {
-      this.loggerService.error(`[DownDetectorService]`, 'fall down' );
 
-      if (feedback) {
-        await this.makeFeedback();
-      } else {
-        await this.storeToDb({
-          url, 
-          issuccess: false,
-          status: 0,
-          statusText: 'fall down',
-        });
-      }
+      await this.storeToDb({
+        url, 
+        issuccess: false,
+        status: 0,
+        statusText: 'fall down',
+      });
+
     }
     
   }
-
 
   async storeToDb(result: IDownDetectorTaskResult): Promise<DownDetectorTaskModel> {
     return this.prismaService.client.downDetectorTaskModel.create({
