@@ -1,0 +1,7 @@
+.footer__point {
+  margin-left: 20px;
+}
+
+.footer__point:first-child {
+  margin-left: 0;
+}

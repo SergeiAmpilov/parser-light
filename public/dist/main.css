@@ -1,7 +1,31 @@
-html, .body {
+.body {
   margin: 0;
   padding: 0;
 }
 
+main {
+  padding-bottom: 60px;
+}
+.header__nav {
+  padding: 20px 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+.header__nav-item {
+  margin-left: 20px;
+}
 
+.header__nav-item:first-child {
+  margin-left: 0;
+}
+.footer {
+  padding: 20px 0;
+}
+.footer__point {
+  margin-left: 20px;
+}
+
+.footer__point:first-child {
+  margin-left: 0;
+}
 

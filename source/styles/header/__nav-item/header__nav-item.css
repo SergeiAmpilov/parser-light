@@ -1,0 +1,7 @@
+.header__nav-item {
+  margin-left: 20px;
+}
+
+.header__nav-item:first-child {
+  margin-left: 0;
+}
