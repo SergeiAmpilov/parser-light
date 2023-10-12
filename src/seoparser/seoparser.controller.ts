@@ -64,7 +64,14 @@ export class SeoParserController extends BaseController {
 
   async render(req: Request, res: Response, next: NextFunction) {
     const list = await this.seoParserService.getSeoTaskList();
-    return res.render('seoparser', { list });
+    const listParsed = list.map((el) => {
+      return {
+        ...el,
+        date: new Date(el.createdAt).toLocaleDateString('ru-RU'),
+      }
+    });
+
+    return res.render('seoparser', { list: listParsed });
   }
 
   async renderSitemap(req: Request, res: Response, next: NextFunction) {
