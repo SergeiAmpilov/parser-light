@@ -1,5 +1,6 @@
 const path = require('path');
 const FileManagerPlugin = require('filemanager-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin'); 
 
 module.exports = {
   entry: './source/scripts/index.js',
@@ -15,5 +16,16 @@ module.exports = {
         },
       },
     }),
+    new MiniCssExtractPlugin()
   ],
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, {
+          loader: 'css-loader'
+        }]
+      },
+    ],
+  },
 };

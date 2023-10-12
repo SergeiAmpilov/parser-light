@@ -1,4 +1,4 @@
-
+import '../styles/index.css';
 import { initYear } from './init/year.js';
 
 const init = () => {
