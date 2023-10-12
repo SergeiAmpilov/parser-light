@@ -28,4 +28,9 @@ main {
 .footer__point:first-child {
   margin-left: 0;
 }
+.card {
+  padding: 10px 5px;
+  border-radius: 5px;
+}
+
 

@@ -1,8 +1,14 @@
-<div>
-  <span>{{ id }}</span>
-  <span>{{ url }}</span>
-  <span>{{ issuccess }}</span>
-  <span>{{ status }}</span>
-  <span>{{ statusText }}</span>
-  <span>{{ createdAt }}</span>
+<div class="card row  grey darken-3">
+  <div class="col">
+    <p>id: <b>{{ id }}</b></p>
+    <p>Дата запуска: <b>{{ date }}</b></p>
+  </div>
+  <div class="col">
+    <p>Результат: <b>{{ result }}</b></p>
+    <p>Код ответа: <b>{{ status }}</b></p>
+    <p>Текст ответа: <b>{{ statusText }}</b></p>
+  </div>
+  <div class="col">
+    <p>Адрес сайта: <b>{{ url }}</b></p>
+  </div>
 </div>

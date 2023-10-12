@@ -1,17 +1,19 @@
 <h1>DownDetector</h1>
+<p>Сервис мониторинга доступности веб-сайтов</p>
 
+<h2>Запуск нового теста</h2>
 <form action="/downdetector/run" method="post">
   url: <input type="text" name="url">
   <br>
   feedback <input type="text" name="feedback" value="no">
   <br> <br>
-  <button>Submit</button>
+  <button>Запустить</button>
 </form>
 
 
 {{#if list.length}}
 <hr>
-<h2>list of tasks</h2>
+<h2>Журнал запущенных тестов</h2>
   {{#each list}}
     {{> ddcard }}
   {{/each}}

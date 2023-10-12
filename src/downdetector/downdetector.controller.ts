@@ -52,6 +52,13 @@ export class DownDetectorController extends BaseController {
   async renderdd(req: Request, res: Response, next: NextFunction) {
 
     const list = await this.downDetectorService.getList();
-    res.status(200).render('downdetector', { list });
+    const listParsed = list.map((el) => {
+      return {
+        ...el,
+        result: el.issuccess ? 'успешно' : 'не успешно',
+        date: new Date(el.createdAt).toLocaleDateString('ru-RU'),
+      }
+    });
+    res.status(200).render('downdetector', { list: listParsed });
   }
 }
