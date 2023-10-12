@@ -1,28 +1,24 @@
 <h1>Seoparser</h1>
 <p>Сервис сбора данных о продвигаемых страницах и тегах на сайтах конкурентов.</p>
 
-
-
 {{#if list.length}}
-<h2>Список запущенных процессов парсинга</h2>
-  <ul>
-    {{#each list}}
-      <div class="card row  grey darken-3">
-          <div class="col s3">
-            <p>id: <b>{{ id }}</b></p>
-            <p>Дата запуска: <b>{{ date }}</b></p>
-          </div>
-          <div class="col s4">
-            <p>url:<br><b>{{ url }}</b></p>
-          </div>
-          <div class="col">
-            <a href="/seoparser/sitemaps/{{ id }}" class="waves-effect waves-light btn blue darken-4">
-              go to sitemap list
-            </a>
-          </div>
-      </div>
-    {{/each}}
-  </ul>
+<h3>Список запущенных процессов парсинга</h3>
+  {{#each list}}
+    <div class="card row grey darken-3">
+        <div class="col s3">
+          <p>id: <b>{{ id }}</b></p>
+          <p>Дата запуска: <b>{{ date }}</b></p>
+        </div>
+        <div class="col s4">
+          <p>url:<br><b>{{ url }}</b></p>
+        </div>
+        <div class="col">
+          <a href="/seoparser/sitemaps/{{ id }}" class="waves-effect waves-light btn blue darken-4">
+            go to sitemap list
+          </a>
+        </div>
+    </div>
+  {{/each}}
 {{/if}}
 
 

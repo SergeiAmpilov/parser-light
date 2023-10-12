@@ -1,32 +1,42 @@
-<h1>Sitemap by task - {{ taskid }}</h1>
+<h1>Список Sitemap</h1>
+<p>список sitemap, полученных в рамках задачи с id - {{ taskid }}</p>
 
 {{#if list.length}}
- <ul>
-    {{#each list}}
-      <li>
-        id: {{ id }}
-        <br>
-        url: {{ url }}
-        <br>
-        lastmod: {{ lastmod }}
-        <br>
-        <button 
-          class="button__parse-pages"
+  {{#each list}}
+    <div class="card row grey darken-3">
+      <div class="col s3">
+        <p>id: <b>{{ id }}</b></p>
+        <p>Дата обновления:<br><b>{{ date }}</b></p>
+      </div>
+      <div class="col s4">
+        url:<br><b>{{ url }}</b>
+      </div>
+      <div class="col s2">
+        <a 
+          href="/seoparser/sitemaps/{{ id }}" 
+          class="waves-effect waves-light btn purple darken-4 button__parse-pages"
           data-url="{{ url }}"
           data-taskid="{{ taskid }}"
-        >
-          Parse pages
-        </button>
-        <br>
-        <a href="/seoparser/renderpages?sitemap={{url}}&taskid={{taskid}}">view pages</a>
-      </li>
-
-      <hr>
-    
-    {{/each}}
-  </ul>
+          >
+          Парсить
+        </a>
+      </div>
+      <div class="col s3">
+        <a 
+          href="/seoparser/renderpages?sitemap={{url}}&taskid={{taskid}}"
+          class="waves-effect waves-light btn blue darken-4">
+          Показать страницы
+        </a>
+      </div>
+    </div>
+  {{/each}}
 {{/if}}
 <a href="/seoparser/render">go back to seoparser</a>
+
+
+
+
+
 
 
 <script>

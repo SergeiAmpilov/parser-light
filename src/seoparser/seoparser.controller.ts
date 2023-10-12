@@ -77,9 +77,15 @@ export class SeoParserController extends BaseController {
   async renderSitemap(req: Request, res: Response, next: NextFunction) {
 
     const list = await this.seoParserService.getSitemapListByTaskId(Number(req.params.id));
+    const listParsed = list.map((el) => {
+      return {
+        ...el,
+        date: new Date(el.lastmod).toLocaleString('ru-RU')
+      };
+    });
     return res.render('sitemap', {
       taskid: req.params.id,
-      list,
+      list: listParsed,
     });
   }
 
