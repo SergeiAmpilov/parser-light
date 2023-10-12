@@ -1,0 +1,1 @@
+(()=>{"use strict";document.addEventListener("DOMContentLoaded",(function(){document.querySelectorAll(".footer__year").forEach((e=>{e.innerHTML=(new Date).getFullYear()}))}))})();

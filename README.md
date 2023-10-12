@@ -29,6 +29,12 @@ npx prisma migrate dev --name init
 
 5. Соберите приложение:
 
+front-end:
+
+npm run build:front
+
+backend:
+
 npm run build
 
 6. Запускайте:
