@@ -93,9 +93,9 @@ export class SeoParserController extends BaseController {
     
     const { id }: SeoTaskModel = await this.seoParserService.run(body);
 
-    this.seoParserService.parseSitemaps(body.url, id);
+    await this.seoParserService.parseSitemaps(body.url, id);
 
-    return res.send(`seoparser task has been started - ${ id }`);
+    return res.json({ id });
 
   }
 

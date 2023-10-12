@@ -47,6 +47,11 @@ class Api {
     return this.request('POST', 'downdetector/run', { url });
   }
 
+  // seo parser
+  runSeoparserTask(url) {
+    return this.request('POST', 'seoparser/run', { url })
+  }
+
 
 }
 
