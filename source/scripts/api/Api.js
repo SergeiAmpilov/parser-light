@@ -21,8 +21,8 @@ class Api {
     .then(data => data);
   }
 
-  showPreloader(form) {
-    form.innerHTML = 
+  showPreloader(node) {
+    node.innerHTML = 
     `
     <div class="row">
       <div class="valign-wrapper">
@@ -42,6 +42,10 @@ class Api {
     `;
   }
 
+  hidePreloader(node) {
+    node.innerHTML = '';
+  }
+
   // down detector
   ddRunTask(url) {
     return this.request('POST', 'downdetector/run', { url });
@@ -58,6 +62,10 @@ class Api {
       url,
       taskid: Number(taskid)
     });
+  }
+
+  parseTags(id) {
+    return this.request('POST', 'seoparser/parsetags', { id: Number(id) });
   }
 }
 

@@ -122,19 +122,26 @@ export class SeoParserService {
     });
   }
 
-  public async parseTagsByPage(id: number): Promise<void> {
+  public async parseTagsByPage(id: number): Promise<ITag> {
+
+    const emptyTag = {
+      title: undefined,
+      h1: undefined,
+      description: undefined
+    };
 
     const pageFound: PageModel | null = await this.prismaService.client.pageModel.findFirst({
       where: { id }
     });
 
     if (!pageFound) {
-      return ;
+      return emptyTag;
     }
 
     try {
+
       const browser: Browser = await puppeteer.launch({
-        headless: false,
+        headless: true,
         defaultViewport: null,
       });
   
@@ -166,6 +173,12 @@ export class SeoParserService {
           description: res.description ?? ''
         }
       })
-    } catch (e) {}
+
+      return res;
+
+    } catch (e) {  }
+
+    return emptyTag;
+
   }
 }

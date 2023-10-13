@@ -8,6 +8,8 @@ import { SeoParserDto } from "./dto/seoparser.task.dto";
 import { SeoParserService } from "./seoparser.service";
 import { SeoTaskModel } from "@prisma/client";
 import { ParsePagesDto } from "./dto/parse-pages.dto";
+import { ParseTagsDto } from "./dto/parse-tags.dto";
+import { ITag } from "./interfaces/tags.interface";
 
 
 
@@ -54,9 +56,12 @@ export class SeoParserController extends BaseController {
         func: this.renderSitemap
       },
       {
-        path: '/seoparser/parsetags/:id',
-        method: 'get',
-        func: this.parseTags
+        path: '/seoparser/parsetags',
+        method: 'post',
+        func: this.parseTags,
+        middleware: [
+          new ValidateMiddleware(ParseTagsDto)
+        ]
       }
     ]);
   }
@@ -117,10 +122,10 @@ export class SeoParserController extends BaseController {
 
   }
 
-  async parseTags(req: Request, res: Response, next: NextFunction) {
-    const { id } = req.params;
-    this.seoParserService.parseTagsByPage(Number(id));
+  async parseTags({ body }: Request<{}, {}, ParseTagsDto>, res: Response, next: NextFunction) {
+
+    const result: ITag = await this.seoParserService.parseTagsByPage(body.id);
     
-    return res.send('tags update started')
+    return res.status(201).json({ ...result });
   }
 }

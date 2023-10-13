@@ -1,26 +1,31 @@
-<h1>Pages for sitemap - {{ sitemap }} and taskId - {{ taskid }}</h1>
-
+<h1>Страницы сайта</h1>
+<p>Список собранных страниц сайта. Источник сбора sitemap: <b>{{ sitemap }}</b>, id задачи - <b>{{ taskid }}</b></p>
 
 {{#if list.length}}
- <ul>
-    {{#each list}}
-      <li>
-        id: {{ id }}
-        <br>
-        url: {{ url }}
-        <br>
-        title: {{ title }}
-        <br>
-        h1: {{ h1 }}
-        <br>
-        description: {{ description }}
-        <br>
-        <a href="/seoparser/parsetags/{{ id }}">parse tags</a>
-      </li>
+  {{#each list}}
+    <div class="card row grey darken-3">
 
-      <hr>
+      <div class="col s4">
+        <p>id: <b>{{ id }}</b></p>
+        <p>url:<br><b>{{ url }}</b></p>
+      </div>
+      <div class="col s5">
+        <p>title: <b class="page__card_title">{{ title }}</b></p>
+        <p>h1: <b class="page__card_h1">{{ h1 }}</b></p>
+        <p>description: <b class="page__card_description">{{ description }}</b></p>
+      </div>
+      <div class="col s2">
+        <a 
+          href="/seoparser/parsetags/{{ id }}" 
+          class="waves-effect waves-light btn purple darken-4 button__parse-tags"
+          data-id="{{ id }}"
+        >Парсить теги</a>
+      </div>
+      <div class="col s1 page__card_preloader"></div>
+    </div>
+
     
-    {{/each}}
-  </ul>
+  
+  {{/each}}
 {{/if}}
 <a href="/seoparser/sitemaps/{{ taskid }}">go back to sitemaps</a>
