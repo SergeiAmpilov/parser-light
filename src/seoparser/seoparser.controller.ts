@@ -101,7 +101,7 @@ export class SeoParserController extends BaseController {
 
   async parsepages({ body }: Request<{}, {}, ParsePagesDto>, res: Response, next: NextFunction) {
     await this.seoParserService.parsePages(body.url, body.taskid);
-    return res.status(200).send('started parsing pages');
+    return res.status(200).json({ message: 'started parsing pages' });
   }
 
   async renderpages(req: Request, res: Response, next: NextFunction) {

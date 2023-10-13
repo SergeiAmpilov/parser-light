@@ -1,20 +1,18 @@
-export function parsePagesButtonHandleClick(evt) {
+import { apiRuntime } from "../api/Api";
+
+export async function parsePagesButtonHandleClick(evt) {
+
+  evt.preventDefault();
+
 
   const url = evt.target.dataset.url;
   const taskid = evt.target.dataset.taskid;
 
-  const bodyparams = {
-    url,
-    taskid: Number(taskid)
-  };
+  console.log('run parse123');
 
-  fetch('/seoparser/parsepages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8'
-    },
-    body: JSON.stringify(bodyparams)
-  })
+  await apiRuntime.parsePages(url, taskid);
+
+  window.location.replace(`/seoparser/renderpages?sitemap=${url}&taskid=${taskid}`);
 
 }
 

@@ -52,7 +52,13 @@ class Api {
     return this.request('POST', 'seoparser/run', { url })
   }
 
-
+  parsePages(url, taskid) {
+    return this.request('POST', 'seoparser/parsepages', 
+    {
+      url,
+      taskid: Number(taskid)
+    });
+  }
 }
 
 
