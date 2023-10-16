@@ -1,4 +1,4 @@
-# Parser (light) - v 0.0.1
+# Parser (light) - v 1.0.0
 
 ![Parser-light](/public/images/parsing.png)
 
@@ -6,7 +6,6 @@ Parser light - это простое веб-приложение для авто
 
 + downdetector - сервис определения работоспособности сайта / ресурса
 + seo-parser - сервис сбора страниц и семантики того или иного сайта
-+ ecom-parser - сбор списка товааров и мониторинг цен интернет-магазинов
 
 ## Установка и запуск приложения:
 
@@ -53,3 +52,4 @@ Profit!
 + Prisma - ORM
 + axios - для запросов
 + puppeteer - для парсинга
++ Materialize.css and express-handlebars - frontend
